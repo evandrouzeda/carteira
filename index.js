@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const Mongodb = require('./config/mongodb')
 const { ObjectId } = require('mongodb')
-
+require('dotenv').config()
 const app = express()
 
 app.use(express.json());
@@ -64,6 +64,6 @@ app.route('/carteria/:id')
 
 
 // Start server
-app.listen(process.env.PORT || 3003, () => {
-    console.log(`Servidor rodando nas porta 3003`)
+app.listen(process.env.PORT || 5000, () => {
+    console.log(`Servidor rodando nas porta 5000`)
 })

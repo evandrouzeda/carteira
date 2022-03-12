@@ -1,4 +1,5 @@
 const { MongoClient, Db } = require("mongodb")
+require('dotenv').config()
 
 module.exports = class Mongodb {
     db = null
@@ -10,9 +11,11 @@ module.exports = class Mongodb {
     async getDB() {
         return new Promise(res => {
             if (this.db === null) {
+                console.log(this.url);
                 MongoClient.connect(this.url, {
                     maxPoolSize: 40
                 }, (err, db) => {
+                    if(err) console.log(err);
                     if (db)
                         this.db = db.db("stonkswallet");
                     res(this.db)

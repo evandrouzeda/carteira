@@ -13,36 +13,36 @@ app.use(cors())
 
 
 const mongodb = new Mongodb()
-const getCarterias = async (request, response, next) => {
+const getCarteiras = async (request, response, next) => {
     const db = await mongodb.getDB()
     db.collection("Carteiras").find({}).toArray()
         .then(result => response.status(200).json(result))
         .catch(error => response.status(401).json({status: 'error', message: 'Erro: ' + error}))
 }
 
-const addCarteria = async (request, response, next) => {
+const addCarteira = async (request, response, next) => {
     const db = await mongodb.getDB()
     db.collection("Carteiras").insertOne(request.body)
-        .then(result => response.status(201).json({ status: 'success', message: 'Carteria criada.' }))
+        .then(result => response.status(201).json({ status: 'success', result }))
         .catch(error => response.status(401).json({ status: 'error', message: 'Erro: ' + error }))
 }
 
-const updateCarteria = async (request, response, next) => {
+const updateCarteira = async (request, response, next) => {
     const { _id, nome } = request.body
     const db = await mongodb.getDB()
     db.collection("Carteiras").updateOne({_id: new ObjectId(_id)}, {$set: {nome}})
-        .then(result => response.status(201).json({ status: 'success', message: 'Carteria atualizada.' }))
+        .then(result => response.status(201).json({ status: 'success', message: 'Carteira atualizada.' }))
         .catch(error => response.status(401).json({ status: 'error', message: 'Erro: ' + error }))
 }
 
-const deleteCarteria = async (request, response, next) => {
+const deleteCarteira = async (request, response, next) => {
     const db = await mongodb.getDB()
     db.collection("Carteiras").deleteOne({_id: new ObjectId(request.params.id)})
-        .then(result => response.status(201).json({ status: 'success', message: 'Carteria removida.' }))
+        .then(result => response.status(201).json({ status: 'success', message: 'Carteira removida.' }))
         .catch(error => response.status(401).json({ status: 'error', message: 'Erro: ' + error }))
 }
 
-const getCarteriaPorID = async (request, response, next) => {
+const getCarteiraPorID = async (request, response, next) => {
     const db = await mongodb.getDB()
     db.collection("Carteiras").findOne({_id: new ObjectId(request.params.id)})
         .then(result => response.status(201).json(result))
@@ -50,17 +50,17 @@ const getCarteriaPorID = async (request, response, next) => {
 }
 
 app
-    .route('/carteria')
+    .route('/carteira')
     // GET endpoint
-    .get(getCarterias)
+    .get(getCarteiras)
     // POST endpoint
-    .post(addCarteria)
+    .post(addCarteira)
     // PUT
-    .put(updateCarteria)  
+    .put(updateCarteira)  
 
-app.route('/carteria/:id')
-    .get(getCarteriaPorID) 
-    .delete(deleteCarteria) 
+app.route('/carteira/:id')
+    .get(getCarteiraPorID) 
+    .delete(deleteCarteira) 
 
 
 // Start server
